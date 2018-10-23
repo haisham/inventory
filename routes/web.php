@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/inventory', 'InventoryController@store')->name('store'); 
