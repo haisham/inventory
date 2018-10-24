@@ -26,6 +26,13 @@ class InventoryController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'date' => 'required|date',
+            'action' => 'required',
+            'quantity' => 'required',
+            'price' => 'required',
+        ]);
+        //post data is valid - continue
         $date = $request->get('date');
         $action = $request->get('action');
         $quantity = $request->get('quantity');
