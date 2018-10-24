@@ -30,7 +30,7 @@ class InventoryController extends Controller
             'date' => 'required|date',
             'action' => 'required',
             'quantity' => 'required',
-            'price' => 'required',
+            'unitPrice' => 'required',
         ]);
         //post data is valid - continue
         $date = $request->get('date');
