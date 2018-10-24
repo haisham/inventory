@@ -29,11 +29,11 @@ class InventoryController extends Controller
         $validatedData = $request->validate([
             'date' => 'required|date',
             'action' => 'required',
-            'quantity' => 'required'
+            'quantity' => 'required|numeric'
         ]);
         if ($request->get('action') === "buy") {
             $validatedData = $request->validate([
-                'unitPrice' => 'required'
+                'unitPrice' => 'required|numeric'
             ]);
         }
         //post data is valid - continue
