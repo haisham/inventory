@@ -57,4 +57,21 @@ class InventoryController extends Controller
         }
     }
 
+    /**
+     * Get overview on a particular date
+     *
+     * @access public
+     * @return \Illuminate\Http\Response
+     */
+
+    public function getOverview($date)
+    {
+        $validatedData = $request->validate([
+            'date' => 'required|date'
+        ]);
+        $formattedDate = date("Y-m-d H:i:s",strtotime($date));
+        $data = Inventory::where('date', '<=', $formattedDate)->get();
+        return response()->json($data);
+    }
+
 }

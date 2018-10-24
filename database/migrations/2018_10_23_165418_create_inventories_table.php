@@ -17,7 +17,7 @@ class CreateInventoriesTable extends Migration
             $table->increments('id');
             $table->string('action');
             $table->integer('quantity');
-            $table->float('unit_price');
+            $table->float('unit_price')->nullable();
             $table->dateTime('date');
             $table->timestamps();
         });

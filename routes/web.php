@@ -16,4 +16,5 @@ Route::get('/', function () {
 });
 
 Route::post('/inventory', 'InventoryController@store')->name('store'); 
+Route::get('/inventory/{date}', 'InventoryController@getOverview'); 
 
