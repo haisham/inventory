@@ -29,9 +29,13 @@ class InventoryController extends Controller
         $validatedData = $request->validate([
             'date' => 'required|date',
             'action' => 'required',
-            'quantity' => 'required',
-            'unitPrice' => 'required',
+            'quantity' => 'required'
         ]);
+        if ($request->get('action') === "buy") {
+            $validatedData = $request->validate([
+                'unitPrice' => 'required'
+            ]);
+        }
         //post data is valid - continue
         $date = $request->get('date');
         $action = $request->get('action');
