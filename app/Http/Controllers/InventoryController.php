@@ -26,15 +26,19 @@ class InventoryController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validatedData = $request->validate(
+            [
             'date' => 'required|date',
             'action' => 'required',
             'quantity' => 'required|numeric'
-        ]);
+            ]
+        );
         if ($request->get('action') === "buy") {
-            $validatedData = $request->validate([
+            $validatedData = $request->validate(
+                [
                 'unitPrice' => 'required|numeric'
-            ]);
+                ]
+            );
         }
         //post data is valid - continue
         $date = $request->get('date');
@@ -46,7 +50,7 @@ class InventoryController extends Controller
         $Inventory->action = $action;
         $Inventory->quantity = $quantity;
         $Inventory->unit_price = $unitPrice;
-        $Inventory->date = date("Y-m-d H:i:s",strtotime($date));
+        $Inventory->date = date("Y-m-d H:i:s", strtotime($date));
 
         if($Inventory->save()) {
             $response = ['success'=>true];
@@ -66,12 +70,29 @@ class InventoryController extends Controller
 
     public function getOverview($date)
     {
-        $validatedData = $request->validate([
-            'date' => 'required|date'
-        ]);
-        $formattedDate = date("Y-m-d H:i:s",strtotime($date));
-        $data = Inventory::where('date', '<=', $formattedDate)->get();
-        return response()->json($data);
+        if (validateDate($date,'Y-m-d')) {
+            $formattedDate = date("Y-m-d H:i:s", strtotime($date));
+            $data = Inventory::where('date', '<=', $formattedDate)->get();
+            $response = ['success'=>true , 'data' => $data ];
+            return response()->json($response);
+        } else {
+            $response = ['success'=>false];
+            return response()->json($response);
+        }
+        
+    }
+
+    /**
+     * Checks if date is valid and according to required format
+     *
+     * @access public
+     * @return \Illuminate\Http\Response
+     */
+
+    function validateDate($date, $format)
+    {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) === $date;
     }
 
 }
