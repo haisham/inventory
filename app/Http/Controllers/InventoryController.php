@@ -91,7 +91,7 @@ class InventoryController extends Controller
 
     function validateDate($date, $format)
     {
-        $d = DateTime::createFromFormat($format, $date);
+        $d = new \DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) === $date;
     }
 
