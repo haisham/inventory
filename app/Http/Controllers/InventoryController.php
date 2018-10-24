@@ -70,7 +70,7 @@ class InventoryController extends Controller
 
     public function getOverview($date)
     {
-        if (validateDate($date,'Y-m-d')) {
+        if ($this->validateDate($date,'Y-m-d')) {
             $formattedDate = date("Y-m-d H:i:s", strtotime($date));
             $data = Inventory::where('date', '<=', $formattedDate)->get();
             $response = ['success'=>true , 'data' => $data ];
