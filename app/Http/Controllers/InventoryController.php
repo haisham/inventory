@@ -70,9 +70,9 @@ class InventoryController extends Controller
 
     public function getOverview($date)
     {
-        if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date)) { 
+        if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date)) { 
             $formattedDate = date("Y-m-d H:i:s", strtotime($date));
-            $data = Inventory::where('date', '<=', $formattedDate)->get();
+            $data = Inventory::where('date', '<=', $formattedDate)->orderBy('date', 'asc')->get();
             $response = ['success'=>true , 'data' => $data ];
             return response()->json($response);
         } else {
